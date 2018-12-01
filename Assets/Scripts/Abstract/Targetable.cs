@@ -2,6 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public interface Targetable {
-    EntitySide GetSide();
+public abstract class Targetable : MonoBehaviour {
+    public abstract EntitySide GetSide();
 }

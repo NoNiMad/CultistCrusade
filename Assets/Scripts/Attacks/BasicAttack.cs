@@ -8,22 +8,13 @@ public class BasicAttack : Attack {
     public override void Execute()
     {
         StartReloading();
-        Targetable target = tracker.GetRandomTarget();
-        if (target != null)
+        HealthSystem hs = tracker.GetRandomTarget<HealthSystem>();
+        if (hs != null)
         {
-            HealthSystem h = (target as MonoBehaviour).GetComponent<HealthSystem>();
-            if (h != null)
+            if (hs.Damage(damage))
             {
-                if (h.Damage(damage))
-                {
-                    tracker.RemoveTarget(target);
-                }
+                tracker.RemoveTarget(hs.GetComponent<Targetable>());
             }
         }
-    }
-
-    public override float GetReloadTime()
-    {
-        return 1;
     }
 }

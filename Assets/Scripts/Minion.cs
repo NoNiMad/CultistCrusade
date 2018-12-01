@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Minion : MonoBehaviour, Targetable {
+public class Minion : Targetable {
     Attack mainAttack;
 
     void Start()
@@ -18,7 +18,7 @@ public class Minion : MonoBehaviour, Targetable {
         }
     }
 
-    public EntitySide GetSide()
+    public override EntitySide GetSide()
     {
         return EntitySide.FRIENDLY;
     }
