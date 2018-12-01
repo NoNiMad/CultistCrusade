@@ -17,6 +17,11 @@ public class TargetTracker : MonoBehaviour {
     {
         if (maxTracked == -1 || targets.Count < maxTracked)
         {
+            HealthSystem hs = (target as MonoBehaviour).GetComponent<HealthSystem>();
+            if (hs != null)
+            {
+                hs.OnKilled += RemoveTarget;
+            }
             targets.Add(target);
         }
     }
