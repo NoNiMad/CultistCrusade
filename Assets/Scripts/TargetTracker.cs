@@ -17,7 +17,7 @@ public class TargetTracker : MonoBehaviour {
     {
         if (maxTracked == -1 || targets.Count < maxTracked)
         {
-            HealthSystem hs = (target as MonoBehaviour).GetComponent<HealthSystem>();
+            HealthSystem hs = target.GetComponent<HealthSystem>();
             if (hs != null)
             {
                 hs.OnKilled += RemoveTarget;
@@ -35,6 +35,12 @@ public class TargetTracker : MonoBehaviour {
     {
         if (targets.Count == 0) return null;
         return targets[Random.Range(0, targets.Count - 1)];
+    }
+
+    public T GetRandomTarget<T>()
+    {
+        if (targets.Count == 0) return default(T);
+        return targets[Random.Range(0, targets.Count - 1)].GetComponent<T>();
     }
 
     public List<Targetable> GetRandomTargets(int n)

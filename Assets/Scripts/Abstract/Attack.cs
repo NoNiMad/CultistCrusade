@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public abstract class Attack : MonoBehaviour {
+    public float reloadTime = 1;
+
     protected TargetTracker tracker;
 
     protected bool reloading;
@@ -36,7 +38,10 @@ public abstract class Attack : MonoBehaviour {
     public abstract void Execute();
 
     // Cooldown in seconds
-    public abstract float GetReloadTime();
+    public float GetReloadTime()
+    {
+        return reloadTime;
+    }
 
     public void StartReloading()
     {

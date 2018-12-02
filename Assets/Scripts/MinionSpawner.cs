@@ -32,7 +32,15 @@ public class MinionSpawner : MonoBehaviour {
             RaycastHit hit;
             if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
             {
-                if (hit.transform.CompareTag("Navigable"))
+                Targetable target = hit.transform.GetComponent<Targetable>();
+                if (target != null)
+                {
+                    if (target.GetSide() == EntitySide.ENNEMY)
+                    {
+                        hasDest = true;
+                        dest = target.transform.position;
+                    }
+                } else if (hit.transform.CompareTag("Navigable"))
                 {
                     hasDest = true;
                     dest = hit.point;

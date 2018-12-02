@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ennemy : MonoBehaviour, Targetable {    
+public class Enemy : Targetable {    
     Attack mainAttack;
 
 	void Start ()
@@ -18,7 +18,7 @@ public class Ennemy : MonoBehaviour, Targetable {
         }
 	}
 
-    public EntitySide GetSide()
+    public override EntitySide GetSide()
     {
         return EntitySide.ENNEMY;
     }
