@@ -11,7 +11,7 @@ public abstract class Attack : MonoBehaviour {
     protected bool reloading;
     protected float reloadAmount;
 
-    void Start()
+    protected virtual void Start()
     {
         tracker = GetComponent<TargetTracker>();
         charAnimator = GetComponentInChildren<Animator>();
@@ -19,7 +19,7 @@ public abstract class Attack : MonoBehaviour {
         reloadAmount = 0;
     }
 
-    void Update()
+    protected virtual void Update()
     {
         if (reloading)
         {
@@ -31,7 +31,7 @@ public abstract class Attack : MonoBehaviour {
         }
     }
 
-    public bool CanExecute()
+    public virtual bool CanExecute()
     {
         return !reloading;
     }

@@ -4,15 +4,17 @@ using UnityEngine;
 
 public class Enemy : Targetable {    
     Attack mainAttack;
+    TargetTracker tracker;
 
-	void Start ()
+	void Start()
     {
         mainAttack = GetComponent<Attack>();
+        tracker = GetComponent<TargetTracker>();
 	}
 	
 	void Update ()
     {
-        if (mainAttack.CanExecute())
+        if (tracker.HasTargets() && mainAttack.CanExecute())
         {
             mainAttack.Execute();
         }

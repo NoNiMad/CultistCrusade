@@ -64,7 +64,8 @@ public class MinionSpawner : MonoBehaviour {
     {
         GameObject newMinion = Instantiate(MinionPrefab, transform);
         newMinion.transform.position = SpawnArea.position + Vector3.up * 0.5f;
-        newMinion.GetComponent<NavMeshAgent>().destination = GetRandomDest();
+        if (hasDest)
+            newMinion.GetComponent<NavMeshAgent>().destination = GetRandomDest();
     }
 
     public Vector3 GetRandomDest()

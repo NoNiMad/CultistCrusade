@@ -6,11 +6,9 @@ using UnityEngine.AI;
 public class PlayerController : MonoBehaviour {
     public float speed;
 
-    NavMeshAgent agent;
     Rigidbody rb;
 
 	void Start () {
-        agent = GetComponent<NavMeshAgent>();
         rb = GetComponent<Rigidbody>();
 	}
 	

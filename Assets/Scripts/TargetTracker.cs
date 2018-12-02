@@ -13,6 +13,11 @@ public class TargetTracker : MonoBehaviour {
         targets = new List<Targetable>();
     }
 
+    public bool HasTargets()
+    {
+        return targets.Count > 0;
+    }
+
     public void AddTarget(Targetable target)
     {
         if (maxTracked == -1 || targets.Count < maxTracked)
