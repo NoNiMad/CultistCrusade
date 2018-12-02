@@ -12,13 +12,11 @@ public class MinionSpawner : MonoBehaviour {
     bool hasDest;
     Vector3 dest;
 
-	// Use this for initialization
 	void Start () {
         hasDest = false;
         timeElapsed = 0;
 	}
 	
-	// Update is called once per frame
 	void Update () {
         timeElapsed += Time.deltaTime;
         if (timeElapsed > delay)
@@ -45,18 +43,19 @@ public class MinionSpawner : MonoBehaviour {
                     hasDest = true;
                     dest = hit.point;
                 }
-            }
-        }
 
-        foreach (NavMeshAgent agent in GetComponentsInChildren<NavMeshAgent>())
-        {
-            if (!agent.isActiveAndEnabled) continue;
-            if (!hasDest)
-            {
-                agent.destination = agent.transform.localPosition;
-            } else
-            {
-                agent.destination = dest;
+                foreach (NavMeshAgent agent in GetComponentsInChildren<NavMeshAgent>())
+                {
+                    if (!agent.isActiveAndEnabled) continue;
+                    if (!hasDest)
+                    {
+                        agent.destination = agent.transform.localPosition;
+                    }
+                    else
+                    {
+                        agent.destination = GetRandomDest();
+                    }
+                }
             }
         }
     }
@@ -65,5 +64,22 @@ public class MinionSpawner : MonoBehaviour {
     {
         GameObject newMinion = Instantiate(MinionPrefab, transform);
         newMinion.transform.position = SpawnArea.position + Vector3.up * 0.5f;
+        newMinion.GetComponent<NavMeshAgent>().destination = GetRandomDest();
     }
+
+    public Vector3 GetRandomDest()
+    {
+        Vector3 inUnitSphere = Random.insideUnitSphere;
+        inUnitSphere.y = 0;
+        return dest + inUnitSphere * Mathf.Log10(transform.childCount) * 2;
+    }
+
+    /*public void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(dest, Mathf.Log10(transform.childCount) * 2);
+        foreach (NavMeshAgent agent in GetComponentsInChildren<NavMeshAgent>())
+        {
+            Gizmos.DrawLine(agent.transform.position, agent.destination);
+        }
+    }*/
 }

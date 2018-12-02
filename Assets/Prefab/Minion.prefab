@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4653659785655252}
   - component: {fileID: 135603649165685304}
   - component: {fileID: 114770362064864352}
-  m_Layer: 2
+  m_Layer: 10
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -40,12 +40,11 @@ GameObject:
   - component: {fileID: 23098860019558990}
   - component: {fileID: 136127516965818536}
   - component: {fileID: 195798975462067314}
-  - component: {fileID: 54166115490580554}
   - component: {fileID: 114061076084741694}
   - component: {fileID: 114263833601099836}
   - component: {fileID: 114971595806074128}
   - component: {fileID: 114491225904374728}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Minion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -121,21 +120,6 @@ MeshFilter:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1840251102165348}
   m_Mesh: {fileID: 10206, guid: 0000000000000000e000000000000000, type: 0}
---- !u!54 &54166115490580554
-Rigidbody:
-  m_ObjectHideFlags: 1
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 100100000}
-  m_GameObject: {fileID: 1840251102165348}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 1
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!114 &114061076084741694
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -171,6 +155,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0adf382220f9c854eb347425c0e6805b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  reloadTime: 1
   damage: 10
 --- !u!114 &114770362064864352
 MonoBehaviour:
@@ -196,6 +181,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxTracked: -1
+  targets: []
 --- !u!135 &135603649165685304
 SphereCollider:
   m_ObjectHideFlags: 1
@@ -229,14 +215,14 @@ NavMeshAgent:
   m_GameObject: {fileID: 1840251102165348}
   m_Enabled: 1
   m_AgentTypeID: 0
-  m_Radius: 0.5000001
+  m_Radius: 0.50001
   m_Speed: 5
   m_Acceleration: 20
-  avoidancePriority: 50
+  avoidancePriority: 80
   m_AngularSpeed: 120
   m_StoppingDistance: 1
   m_AutoTraverseOffMeshLink: 1
-  m_AutoBraking: 0
+  m_AutoBraking: 1
   m_AutoRepath: 1
   m_Height: 2
   m_BaseOffset: 1
