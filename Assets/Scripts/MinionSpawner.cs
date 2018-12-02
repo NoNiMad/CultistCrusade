@@ -7,6 +7,7 @@ public class MinionSpawner : MonoBehaviour {
     public Transform SpawnArea;
     public GameObject MinionPrefab;
     public float delay;
+    public int limit;
 
     float timeElapsed;
     bool hasDest;
@@ -18,29 +19,28 @@ public class MinionSpawner : MonoBehaviour {
 	}
 	
 	void Update () {
-        timeElapsed += Time.deltaTime;
-        if (timeElapsed > delay)
+        if (transform.childCount < limit)
         {
-            SpawnMinion();
-            timeElapsed = 0;
+            timeElapsed += Time.deltaTime;
+            if (timeElapsed > delay)
+            {
+                SpawnMinion();
+                timeElapsed = 0;
+            }
         }
 
         if (Input.GetMouseButtonUp(0))
         {
             RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, LayerMask.GetMask("Ground", "Enemy")))
             {
+                hasDest = true;
                 Targetable target = hit.transform.GetComponent<Targetable>();
                 if (target != null)
                 {
-                    if (target.GetSide() == EntitySide.ENNEMY)
-                    {
-                        hasDest = true;
-                        dest = target.transform.position;
-                    }
-                } else if (hit.transform.CompareTag("Navigable"))
+                    dest = target.transform.position;
+                } else
                 {
-                    hasDest = true;
                     dest = hit.point;
                 }
 

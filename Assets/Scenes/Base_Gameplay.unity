@@ -123,7 +123,7 @@ GameObject:
   - component: {fileID: 19770844}
   - component: {fileID: 19770846}
   - component: {fileID: 19770845}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -178,7 +178,7 @@ GameObject:
   - component: {fileID: 39119597}
   - component: {fileID: 39119596}
   - component: {fileID: 39119595}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room (1)
   m_TagString: Navigable
   m_Icon: {fileID: 0}
@@ -262,7 +262,7 @@ GameObject:
   - component: {fileID: 76780414}
   - component: {fileID: 76780416}
   - component: {fileID: 76780415}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -324,7 +324,7 @@ GameObject:
   - component: {fileID: 84940545}
   - component: {fileID: 84940544}
   - component: {fileID: 84940543}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ennemy (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -500,7 +500,7 @@ GameObject:
   - component: {fileID: 257471544}
   - component: {fileID: 257471546}
   - component: {fileID: 257471545}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -562,7 +562,7 @@ GameObject:
   - component: {fileID: 299262532}
   - component: {fileID: 299262531}
   - component: {fileID: 299262530}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ennemy (8)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -746,7 +746,7 @@ GameObject:
   - component: {fileID: 404612562}
   - component: {fileID: 404612561}
   - component: {fileID: 404612560}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ennemy (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -930,7 +930,7 @@ GameObject:
   - component: {fileID: 483188635}
   - component: {fileID: 483188634}
   - component: {fileID: 483188633}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ennemy (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1140,7 +1140,7 @@ GameObject:
   - component: {fileID: 598300168}
   - component: {fileID: 598300167}
   - component: {fileID: 598300166}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1232,7 +1232,7 @@ GameObject:
   - component: {fileID: 726234881}
   - component: {fileID: 726234880}
   - component: {fileID: 726234879}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ennemy (11)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1416,7 +1416,7 @@ GameObject:
   - component: {fileID: 749681520}
   - component: {fileID: 749681519}
   - component: {fileID: 749681518}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ennemy (9)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1593,7 +1593,7 @@ GameObject:
   - component: {fileID: 765981613}
   - component: {fileID: 765981612}
   - component: {fileID: 765981611}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: SpawnArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1677,7 +1677,7 @@ GameObject:
   - component: {fileID: 885926373}
   - component: {fileID: 885926375}
   - component: {fileID: 885926374}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1732,7 +1732,7 @@ GameObject:
   - component: {fileID: 918273966}
   - component: {fileID: 918273965}
   - component: {fileID: 918273964}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Corridor
   m_TagString: Navigable
   m_Icon: {fileID: 0}
@@ -1817,7 +1817,7 @@ GameObject:
   - component: {fileID: 942920012}
   - component: {fileID: 942920011}
   - component: {fileID: 942920010}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1902,7 +1902,7 @@ GameObject:
   - component: {fileID: 1027172023}
   - component: {fileID: 1027172022}
   - component: {fileID: 1027172021}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1987,7 +1987,7 @@ GameObject:
   - component: {fileID: 1040491746}
   - component: {fileID: 1040491745}
   - component: {fileID: 1040491744}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Cube (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2071,7 +2071,7 @@ GameObject:
   - component: {fileID: 1123492865}
   - component: {fileID: 1123492866}
   - component: {fileID: 1123492867}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2126,7 +2126,7 @@ GameObject:
   - component: {fileID: 1201578850}
   - component: {fileID: 1201578849}
   - component: {fileID: 1201578848}
-  m_Layer: 0
+  m_Layer: 9
   m_Name: Room
   m_TagString: Navigable
   m_Icon: {fileID: 0}
@@ -2218,7 +2218,7 @@ GameObject:
   - component: {fileID: 1239819368}
   - component: {fileID: 1239819367}
   - component: {fileID: 1239819366}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ennemy (10)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2394,7 +2394,7 @@ GameObject:
   - component: {fileID: 1278298772}
   - component: {fileID: 1278298774}
   - component: {fileID: 1278298773}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2510,7 +2510,7 @@ GameObject:
   - component: {fileID: 1336140648}
   - component: {fileID: 1336140650}
   - component: {fileID: 1336140649}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2564,7 +2564,7 @@ GameObject:
   - component: {fileID: 1340137579}
   - component: {fileID: 1340137581}
   - component: {fileID: 1340137580}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2626,7 +2626,7 @@ GameObject:
   - component: {fileID: 1371919458}
   - component: {fileID: 1371919457}
   - component: {fileID: 1371919456}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ennemy (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2802,7 +2802,7 @@ GameObject:
   - component: {fileID: 1424465884}
   - component: {fileID: 1424465886}
   - component: {fileID: 1424465885}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2864,7 +2864,7 @@ GameObject:
   - component: {fileID: 1466997125}
   - component: {fileID: 1466997124}
   - component: {fileID: 1466997123}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ennemy (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3040,7 +3040,7 @@ GameObject:
   - component: {fileID: 1467340603}
   - component: {fileID: 1467340605}
   - component: {fileID: 1467340604}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3188,7 +3188,7 @@ GameObject:
   - component: {fileID: 1658049541}
   - component: {fileID: 1658049543}
   - component: {fileID: 1658049542}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3242,7 +3242,7 @@ GameObject:
   - component: {fileID: 1777055254}
   - component: {fileID: 1777055256}
   - component: {fileID: 1777055255}
-  m_Layer: 2
+  m_Layer: 12
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3304,7 +3304,7 @@ GameObject:
   - component: {fileID: 1848562505}
   - component: {fileID: 1848562506}
   - component: {fileID: 1848562507}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ennemy
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3530,7 +3530,7 @@ GameObject:
   - component: {fileID: 1911130588}
   - component: {fileID: 1911130587}
   - component: {fileID: 1911130593}
-  m_Layer: 9
+  m_Layer: 10
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3630,7 +3630,7 @@ GameObject:
   - component: {fileID: 1943485888}
   - component: {fileID: 1943485887}
   - component: {fileID: 1943485886}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ennemy (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -3826,7 +3826,8 @@ MonoBehaviour:
   SpawnArea: {fileID: 765981614}
   MinionPrefab: {fileID: 1840251102165348, guid: 9fe54a061240d124bbc22a9ab7403869,
     type: 2}
-  delay: 0.2
+  delay: 0.5
+  limit: 100
 --- !u!4 &1944017887
 Transform:
   m_ObjectHideFlags: 0
@@ -3881,11 +3882,11 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 100000, guid: 13a491b25b00d2149b19c0e6841a0994, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     - target: {fileID: 100002, guid: 13a491b25b00d2149b19c0e6841a0994, type: 3}
       propertyPath: m_Layer
-      value: 9
+      value: 10
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 13a491b25b00d2149b19c0e6841a0994, type: 3}
@@ -3979,7 +3980,7 @@ GameObject:
   - component: {fileID: 2048154773}
   - component: {fileID: 2048154772}
   - component: {fileID: 2048154771}
-  m_Layer: 0
+  m_Layer: 12
   m_Name: Ennemy (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}

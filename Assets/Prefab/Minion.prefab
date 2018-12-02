@@ -21,7 +21,7 @@ GameObject:
   - component: {fileID: 4653659785655252}
   - component: {fileID: 135603649165685304}
   - component: {fileID: 114770362064864352}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -44,7 +44,7 @@ GameObject:
   - component: {fileID: 114263833601099836}
   - component: {fileID: 114971595806074128}
   - component: {fileID: 114491225904374728}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Minion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
