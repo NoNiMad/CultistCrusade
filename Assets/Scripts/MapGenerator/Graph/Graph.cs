@@ -95,6 +95,11 @@ namespace PrimAlgorithm
             return nodes_.Find(n => n.Equals(node)) != null;
         }
 
+        public bool Contains(T context)
+        {
+            return FindVertex(context) != null;
+        }
+
         public void Remove(Node node)
         {
             nodes_.Remove(node);

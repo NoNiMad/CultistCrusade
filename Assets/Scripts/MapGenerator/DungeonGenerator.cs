@@ -26,6 +26,8 @@ public class DungeonGenerator : MonoBehaviour
 
     private Mesh mesh;
     private Dictionary<Graph<Vector2>.Node, Graph<Vector2>.Node> tree;
+    private Graph<Vector2> finalGraph;
+    private Graph<Vector2> graph;
 
     void Start()
     {
@@ -38,7 +40,7 @@ public class DungeonGenerator : MonoBehaviour
         rand = new Random();
 
         Color backgroundColor;
-        ColorUtility.TryParseHtmlString("#6495ED", out backgroundColor);
+        ColorUtility.TryParseHtmlString("#2F4F4F", out backgroundColor);
 
         Color roomColor;
         ColorUtility.TryParseHtmlString("#DEB887", out roomColor);
@@ -59,8 +61,8 @@ public class DungeonGenerator : MonoBehaviour
             TryCreateRoom(1, roomColor, rooms);
 
         var query = rooms.Where(room =>
-                (room.GameObject.transform.localScale.x > 1.25f * roomWidth.Average ||
-                 room.GameObject.transform.localScale.y > 1.25f * roomHeight.Average) && !relevantRooms.Contains(room))
+                (room.GameObject.transform.localScale.x > roomWidth.Average ||
+                 room.GameObject.transform.localScale.y > roomHeight.Average) && !relevantRooms.Contains(room))
             .ToList();
         relevantRooms.AddRange(query);
 
@@ -78,16 +80,15 @@ public class DungeonGenerator : MonoBehaviour
             new ConstraintOptions {ConformingDelaunay = true, SegmentSplitting = 1};
         mesh = (Mesh) polygon.Triangulate(options);
 
-        var graph = new Graph<Vector2>(mesh.Vertices.Select(vertex => vertex.toVec2()).ToList());
+        graph = new Graph<Vector2>(mesh.Vertices.Select(vertex => vertex.toVec2()).ToList());
 
         foreach (var edge in mesh.Edges)
         {
-            var v0 = mesh.vertices[edge.P0];
-            var v1 = mesh.vertices[edge.P1];
-            var dist = (int) (new Vector2((float) v0.x, (float) v0.y) - new Vector2((float) v1.x, (float) v1.y))
-                .magnitude;
+            var v0 = mesh.vertices[edge.P0].toVec2();
+            var v1 = mesh.vertices[edge.P1].toVec2();
+            var dist = (int) (v0 - v1).magnitude;
 
-            graph.SetEdge(mesh.vertices[edge.P0].toVec2(), mesh.vertices[edge.P1].toVec2(), dist);
+            graph.SetEdge(v0, v1, dist);
         }
 
         var prim = new Prim<Vector2>();
@@ -96,8 +97,35 @@ public class DungeonGenerator : MonoBehaviour
             rooms[0].GetTop() + (rooms[0].GetBottom() - rooms[0].GetTop()) / 2);
         prim.prim(graph, graph.FindVertex(mainRoomPos), ref tree);
 
-        
-        
+        finalGraph = new Graph<Vector2>(Enumerable.Empty<Vector2>());
+        foreach (var pair in tree)
+        {
+            if (!finalGraph.Contains(pair.Key.context))
+                finalGraph.AddVertex(pair.Key.context);
+            if (!finalGraph.Contains(pair.Value.context))
+                finalGraph.AddVertex(pair.Value.context);
+            finalGraph.SetEdge(pair.Key.context, pair.Value.context, 0);
+        }
+
+        foreach (var edge in mesh.Edges)
+        {
+            var v0 = graph.FindVertex(mesh.vertices[edge.P0].toVec2());
+            var v1 = graph.FindVertex(mesh.vertices[edge.P1].toVec2());
+
+            if (finalGraph.Contains(v0) &&
+                finalGraph.FindVertex(v0.context).edges.Any(subEdge => subEdge.to.context.Equals(v1.context)))
+                continue;
+            if (rand.NextDouble() > 0.25)
+                continue;
+            if (!finalGraph.Contains(v0.context))
+                finalGraph.AddVertex(v0.context);
+            if (!finalGraph.Contains(v1.context))
+                finalGraph.AddVertex(v1.context);
+
+            finalGraph.SetEdge(v0.context, v1.context, 0);
+            Debug.Log("Readded");
+        }
+
         watch.Stop();
         Debug.Log("Generated in " + watch.ElapsedMilliseconds + " ms");
     }
@@ -108,6 +136,18 @@ public class DungeonGenerator : MonoBehaviour
         {
             // We're probably in the editor
             return;
+        }
+        
+        Gizmos.color = Color.blue;
+
+        foreach (var node in finalGraph.nodes)
+        {
+            foreach (var edge in node.edges)
+            {
+                var p0 = new Vector3(node.context.x, node.context.y, 0);
+                var p1 = new Vector3(edge.to.context.x, edge.to.context.y, 0);
+                Gizmos.DrawLine(p0, p1);
+            }
         }
 
         Gizmos.color = Color.red;
