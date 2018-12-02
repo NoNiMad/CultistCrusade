@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Ennemy : Targetable {    
+public class Enemy : Targetable {    
     Attack mainAttack;
 
 	void Start ()
