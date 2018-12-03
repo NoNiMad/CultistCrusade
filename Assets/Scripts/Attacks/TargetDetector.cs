@@ -4,22 +4,24 @@ using UnityEngine;
 
 public class TargetDetector : MonoBehaviour {
     public EntitySide targetSide;
+    public float range;
 
-    private void OnTriggerEnter(Collider other)
+    TargetTracker tracker;
+
+    private void Start()
     {
-        Targetable target = other.GetComponent<Targetable>();
-        if (target != null && targetSide == target.GetSide())
-        {
-            GetComponentInParent<TargetTracker>().AddTarget(target);
-        }
+        tracker = GetComponent<TargetTracker>();
     }
 
-    private void OnTriggerExit(Collider other)
+    private void Update()
     {
-        Targetable target = other.GetComponent<Targetable>();
-        if (target != null && targetSide == target.GetSide())
+        tracker.targets.Clear();
+        Collider[] close = Physics.OverlapSphere(transform.position, range, LayerMask.GetMask(targetSide == EntitySide.FRIENDLY ? "Minion" : "Enemy"));
+        foreach (Collider col in close)
         {
-            GetComponentInParent<TargetTracker>().RemoveTarget(target);
+            Targetable t = col.GetComponent<Targetable>();
+            if (t != null && t.GetSide() == targetSide)
+                tracker.targets.Add(t);
         }
     }
 }
