@@ -4,6 +4,9 @@ using UnityEngine;
 
 public abstract class Attack : MonoBehaviour {
     public float reloadTime = 1;
+    public int favoursOnKill = 0;
+    public FavourManager favourManager;
+    private Animator charAnimator;
 
     protected TargetTracker tracker;
 
@@ -13,6 +16,7 @@ public abstract class Attack : MonoBehaviour {
     void Start()
     {
         tracker = GetComponent<TargetTracker>();
+        charAnimator = GetComponentInChildren<Animator>();
         reloading = false;
         reloadAmount = 0;
     }
@@ -41,6 +45,11 @@ public abstract class Attack : MonoBehaviour {
     public float GetReloadTime()
     {
         return reloadTime;
+    }
+
+    public Animator GetCharAnimator()
+    {
+        return charAnimator;
     }
 
     public void StartReloading()

@@ -9,10 +9,17 @@ public class BasicAttack : Attack {
     {
         StartReloading();
         HealthSystem hs = tracker.GetRandomTarget<HealthSystem>();
+        if (this.GetCharAnimator())
+        {
+            this.GetCharAnimator().SetTrigger("Attack");
+            this.transform.LookAt(hs.transform);
+        }
         if (hs != null)
         {
             if (hs.Damage(damage))
             {
+                if (favourManager != null)
+                    favourManager.AddFavours(favoursOnKill);
                 tracker.RemoveTarget(hs.GetComponent<Targetable>());
             }
         }
