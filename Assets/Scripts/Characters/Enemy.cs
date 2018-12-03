@@ -1,11 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class Enemy : Targetable {    
     BasicAttack basicAttack;
     SeismicAreaAttack seismicAttack;
+    NavMeshAgent navMeshAgent;
     TargetTracker tracker;
+    Animator animator;
+    public float delayToDestroy = 60;
+    public GameObject cemetery;
 	public float delay;
     float elapsed;
 
@@ -14,6 +19,8 @@ public class Enemy : Targetable {
         tracker = GetComponent<TargetTracker>();
         basicAttack = GetComponent<BasicAttack>();
         seismicAttack = GetComponent<SeismicAreaAttack>();
+        animator = GetComponentInChildren<Animator>();
+        navMeshAgent = GetComponent<NavMeshAgent>();
 	}
 	
 	void Update ()
@@ -31,6 +38,8 @@ public class Enemy : Targetable {
             basicAttack.Execute();
             delay = basicAttack.reloadTime;
         }
+        if (this.animator != null && navMeshAgent != null)
+            this.animator.SetFloat("Speed", (this.navMeshAgent.velocity.magnitude / this.navMeshAgent.speed));
 	}
 
     public override EntitySide GetSide()

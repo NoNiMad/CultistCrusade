@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
 
-public class PlayerController : MonoBehaviour {
+public class PlayerController : Targetable {
     public float speed;
 
     NavMeshAgent agent;
@@ -34,5 +34,9 @@ public class PlayerController : MonoBehaviour {
         if (charAnimator != null)
             charAnimator.SetFloat("Speed", (dir * speed).magnitude);
         rb.angularVelocity = Vector3.zero;
+    }
+
+    public override EntitySide GetSide() {
+        return EntitySide.FRIENDLY;
     }
 }
