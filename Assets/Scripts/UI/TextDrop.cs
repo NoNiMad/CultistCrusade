@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class TextDrop : MonoBehaviour {
     public float yOffset = 20;
+    public float yVariation = 5;
     public float speed = 1;
 
     Vector3 initialPos;
@@ -14,6 +15,7 @@ public class TextDrop : MonoBehaviour {
 	void Start () {
         initialPos = transform.position;
 
+        yOffset += Random.Range(-yVariation, yVariation);
         xOffset = Random.Range(0.1f, 1.0f) * yOffset;
         speed = speed * xOffset / yOffset;
         dir = Random.value < 0.5f ? 1 : -1;
