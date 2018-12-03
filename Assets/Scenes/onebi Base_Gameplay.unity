@@ -254,6 +254,52 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4485420981212378, guid: dbd1df477886d264aa6ae9940066f3ef,
     type: 2}
   m_PrefabInternal: {fileID: 606278286}
+--- !u!1001 &158234428
+Prefab:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    m_TransformParent: {fileID: 1848562501}
+    m_Modifications:
+    - target: {fileID: 400078, guid: 723eb5877df8e99418421fb1b21a8ee3, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400078, guid: 723eb5877df8e99418421fb1b21a8ee3, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400078, guid: 723eb5877df8e99418421fb1b21a8ee3, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400078, guid: 723eb5877df8e99418421fb1b21a8ee3, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400078, guid: 723eb5877df8e99418421fb1b21a8ee3, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400078, guid: 723eb5877df8e99418421fb1b21a8ee3, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 400078, guid: 723eb5877df8e99418421fb1b21a8ee3, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 400078, guid: 723eb5877df8e99418421fb1b21a8ee3, type: 3}
+      propertyPath: m_RootOrder
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9500000, guid: 723eb5877df8e99418421fb1b21a8ee3, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: ac4bfcd7a3f67824a970197c292ddd6e, type: 2}
+    m_RemovedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 723eb5877df8e99418421fb1b21a8ee3, type: 3}
+  m_IsPrefabAsset: 0
 --- !u!4 &172161484 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4485420981212378, guid: dbd1df477886d264aa6ae9940066f3ef,
@@ -896,11 +942,6 @@ Prefab:
       propertyPath: m_Name
       value: Ennemy (1)
       objectReference: {fileID: 0}
-    - target: {fileID: 114749206861046072, guid: dbd1df477886d264aa6ae9940066f3ef,
-        type: 2}
-      propertyPath: favourManager
-      value: 
-      objectReference: {fileID: 425100567}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: dbd1df477886d264aa6ae9940066f3ef, type: 2}
   m_IsPrefabAsset: 0
@@ -947,12 +988,19 @@ Prefab:
       propertyPath: m_Name
       value: Ennemy (2)
       objectReference: {fileID: 0}
+    - target: {fileID: 114779180505403766, guid: dbd1df477886d264aa6ae9940066f3ef,
+        type: 2}
+      propertyPath: favourManager
+      value: 
+      objectReference: {fileID: 425100567}
     - target: {fileID: 114749206861046072, guid: dbd1df477886d264aa6ae9940066f3ef,
         type: 2}
       propertyPath: favourManager
       value: 
       objectReference: {fileID: 425100567}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 33438666125576494, guid: dbd1df477886d264aa6ae9940066f3ef, type: 2}
+    - {fileID: 23903266914239352, guid: dbd1df477886d264aa6ae9940066f3ef, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: dbd1df477886d264aa6ae9940066f3ef, type: 2}
   m_IsPrefabAsset: 0
 --- !u!4 &715200186 stripped
@@ -2711,7 +2759,9 @@ Prefab:
       propertyPath: m_RootOrder
       value: 8
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 33438666125576494, guid: dbd1df477886d264aa6ae9940066f3ef, type: 2}
+    - {fileID: 23903266914239352, guid: dbd1df477886d264aa6ae9940066f3ef, type: 2}
   m_SourcePrefab: {fileID: 100100000, guid: dbd1df477886d264aa6ae9940066f3ef, type: 2}
   m_IsPrefabAsset: 0
 --- !u!1 &1605573430
@@ -3164,7 +3214,7 @@ MonoBehaviour:
     type: 2}
   delay: 3
   howManyPerGroup: 5
-  maxCultists: 13
+  maxCultists: 5
   recenserObject: {fileID: 1944017885}
   playerCharacter: {fileID: 1911130586}
   cemetery: {fileID: 1554575089}

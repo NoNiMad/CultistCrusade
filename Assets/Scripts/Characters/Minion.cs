@@ -11,16 +11,18 @@ public class Minion : Targetable {
     public GameObject cemetery;
 
     MinionRecenser  recenser;
-    Attack mainAttack;
     TargetTracker targetTracker;
     NavMeshAgent navMesh;
     Animator charAnimator;
     AudioSource audioEmitter;
+    BasicAttack basicAttack;
+    SeismicAreaAttack seismicAttack;
     
 
     void Start()
     {
-        mainAttack = GetComponent<Attack>();
+        basicAttack = GetComponent<BasicAttack>();
+        seismicAttack = GetComponent<SeismicAreaAttack>();
         targetTracker = GetComponent<TargetTracker>();
         navMesh = GetComponent<NavMeshAgent>();
         charAnimator = GetComponentInChildren<Animator>();
@@ -31,12 +33,14 @@ public class Minion : Targetable {
 
     void Update()
     {
-        //Debug.Log( Vector3.Project(navMesh.desiredVelocity, transform.forward).magnitude / navMesh.speed);
         if (charAnimator != null)
             charAnimator.SetFloat("Speed", Vector3.Project(navMesh.desiredVelocity, transform.forward).magnitude);
-        if (mainAttack.CanExecute() && targetTracker.targets.Count > 0)
+        if (targetTracker.targets.Count > 0)
         {
-            mainAttack.Execute();
+            if (targetTracker.targets.Count < 8 && basicAttack != null && basicAttack.CanExecute())
+                basicAttack.Execute();
+            else if (seismicAttack != null && seismicAttack.CanExecute())
+                seismicAttack.Execute();
         }
     }
 

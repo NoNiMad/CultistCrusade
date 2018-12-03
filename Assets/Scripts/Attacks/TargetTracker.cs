@@ -58,4 +58,9 @@ public class TargetTracker : MonoBehaviour {
         }
         return result;
     }
+
+    public List<Targetable> GetAllTargets()
+    {
+        return targets;
+    }
 }
