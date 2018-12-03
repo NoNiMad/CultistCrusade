@@ -3742,6 +3742,7 @@ MonoBehaviour:
   howManyPerGroup: 5
   maxCultists: 13
   recenserObject: {fileID: 1944017885}
+  playerCharacter: {fileID: 1911130586}
 --- !u!4 &1944017887
 Transform:
   m_ObjectHideFlags: 0

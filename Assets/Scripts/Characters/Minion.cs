@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class Minion : Targetable {
     public GameObject recenserObject;
+    
     MinionRecenser  recenser;
     Attack mainAttack;
     TargetTracker targetTracker;

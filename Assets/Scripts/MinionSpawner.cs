@@ -10,20 +10,56 @@ public class MinionSpawner : MonoBehaviour {
     public int howManyPerGroup = 5;
     public int maxCultists = 50;
     public GameObject recenserObject;
+    public GameObject playerCharacter;
 
+    bool inCombat = false;
+    bool concentrate = false;
     float timeElapsed;
     MinionRecenser recenser;
-    bool hasDest;
-    Vector3 dest;
+    Vector3 lastRayHit;
 
 	void Start () {
         recenser = recenserObject.GetComponent<MinionRecenser>();
-        hasDest = false;
+        lastRayHit = new Vector3(0, 0, 0);
         timeElapsed = 0;
 	}
 	
 	void Update () {
+        Vector3 relativeDest = new Vector3(0, 0, 0);
+
         timeElapsed += Time.deltaTime;
+
+        if (Input.GetMouseButton(1))
+            concentrate = true;
+        else
+            concentrate = false;
+        if (Input.GetMouseButton(0))
+        {
+            relativeDest = GetGroundRaycast(lastRayHit) - playerCharacter.transform.position;
+        }
+        else if (inCombat == false)
+        {
+            if (concentrate)
+                relativeDest = playerCharacter.transform.forward * GetCircleSize() * 2;
+            else
+                relativeDest = playerCharacter.transform.forward * -GetCircleSize();
+        }
+
+        foreach (NavMeshAgent agent in GetComponentsInChildren<NavMeshAgent>())
+        {
+            if (!agent.isActiveAndEnabled) continue;
+            else
+            {
+                if (ShouldSetNewDest(agent.gameObject, agent.destination, relativeDest))
+                {
+                    agent.destination = relativeDest + GetRelativeRandomDest() + playerCharacter.transform.position;
+                }
+            }
+        }
+        CultistSpawning();
+    }
+
+    void CultistSpawning() {
         if (timeElapsed > delay && maxCultists - recenser.HowMany() > 0)
         {
             int i = 0;
@@ -37,61 +73,69 @@ public class MinionSpawner : MonoBehaviour {
             }
             timeElapsed = 0;
         }
+    }
 
-            RaycastHit hit;
-            if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit))
+    Vector3 GetGroundRaycast(Vector3 onFail) {
+        RaycastHit hit;
+        Vector3 groundHit;
+
+        groundHit = onFail;
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, LayerMask.GetMask("Default")))
+        {
+            Targetable target = hit.transform.GetComponent<Targetable>();
+            if (target != null)
             {
-                Targetable target = hit.transform.GetComponent<Targetable>();
-                if (target != null)
+                if (target.GetSide() == EntitySide.ENNEMY)
                 {
-                    if (target.GetSide() == EntitySide.ENNEMY)
-                    {
-                        hasDest = true;
-                        dest = target.transform.position;
-                    }
-                } else if (hit.transform.CompareTag("Navigable"))
-                {
-                    hasDest = true;
-                    dest = hit.point;
-                }
-
-                foreach (NavMeshAgent agent in GetComponentsInChildren<NavMeshAgent>())
-                {
-                    if (!agent.isActiveAndEnabled) continue;
-                    if (!hasDest)
-                    {
-                        agent.destination = agent.transform.localPosition;
-                    }
-                    else
-                    {
-                        agent.destination = GetRandomDest();
-                    }
+                    groundHit = target.transform.position;
                 }
             }
-        
+            else if (hit.transform.CompareTag("Navigable"))
+            {
+                groundHit = hit.point;
+            }
+        }
+        lastRayHit = groundHit;
+        return groundHit;
     }
 
     public void SpawnMinion()
     {
         GameObject newMinion = Instantiate(MinionPrefab, transform);
+
         newMinion.GetComponent<Minion>().recenserObject = this.gameObject;
         newMinion.transform.position = SpawnArea.position + Vector3.up * 0.5f;
-        newMinion.GetComponent<NavMeshAgent>().destination = GetRandomDest();
+        newMinion.GetComponent<NavMeshAgent>().destination = GetRelativeRandomDest() + playerCharacter.transform.position;
     }
 
-    public Vector3 GetRandomDest()
-    {
-        Vector3 inUnitSphere = Random.insideUnitSphere;
-        inUnitSphere.y = 0;
-        return dest + inUnitSphere * Mathf.Log10(transform.childCount) * 2;
+    public bool ShouldSetNewDest(GameObject minion, Vector3 destination, Vector3 relativeDest) {
+        return ((destination - (relativeDest + playerCharacter.transform.position)).magnitude < GetCircleSize()) == false;
     }
 
-    /*public void OnDrawGizmos()
+    public Vector3 GetRelativeRandomDest()
     {
-        Gizmos.DrawWireSphere(dest, Mathf.Log10(transform.childCount) * 2);
+        Vector3 inUnitCircle = Random.insideUnitCircle;
+
+        inUnitCircle.z = inUnitCircle.y;
+        inUnitCircle.y = 0;
+        Debug.Log((inUnitCircle * GetCircleSize()) + "returned");
+        return inUnitCircle * GetCircleSize();
+    }
+
+    float GetCircleSize()
+    {
+        float size = (Mathf.Log10(transform.childCount) * 2) + 0.5f + (0.05f * transform.childCount);
+        if (concentrate)
+            size = size / 2;
+        return (size);
+    }
+
+    public void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(lastRayHit, GetCircleSize());
         foreach (NavMeshAgent agent in GetComponentsInChildren<NavMeshAgent>())
         {
             Gizmos.DrawLine(agent.transform.position, agent.destination);
         }
-    }*/
+    }
 }
