@@ -15,6 +15,9 @@ public class HealthSystem : MonoBehaviour {
     [HideInInspector]
     public int health;
 
+    AudioSource audioEmitter;
+    Targetable character;
+
     RectTransform inGameUIContainer;
 
     GameObject healthBarPrefab;
@@ -35,6 +38,9 @@ public class HealthSystem : MonoBehaviour {
         healthBarChild = healthBarParent.GetChild(0).GetComponent<RectTransform>();
 
         damageTextPrefab = Resources.Load("Prefab/DamageText") as GameObject;
+        
+        audioEmitter =  this.GetComponent<AudioSource>();
+        character = this.GetComponent<Targetable>();
     }
 
     void Update()
@@ -46,7 +52,12 @@ public class HealthSystem : MonoBehaviour {
 
     public bool Damage(int amount)
     {
+        int i = character.hurtClips.Length;
+
+        i = Random.Range(0, i - 1);
         health -= amount;
+        if (amount > 0 && character.hurtClips.Length > 0 && health > 0)
+            audioEmitter.PlayOneShot(character.hurtClips[i]);
         if (health > maxHealth)
         {
             health = maxHealth;

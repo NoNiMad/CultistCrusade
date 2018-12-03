@@ -4,8 +4,10 @@ using UnityEngine.AI;
 using UnityEngine;
 
 public class Minion : Targetable {
-    public GameObject recenserObject;
     public float delayToDestroy;
+    public AudioClip rushScream;
+    
+    public GameObject recenserObject;
     public GameObject cemetery;
 
     MinionRecenser  recenser;
@@ -13,6 +15,7 @@ public class Minion : Targetable {
     TargetTracker targetTracker;
     NavMeshAgent navMesh;
     Animator charAnimator;
+    AudioSource audioEmitter;
     
 
     void Start()
@@ -22,6 +25,7 @@ public class Minion : Targetable {
         navMesh = GetComponent<NavMeshAgent>();
         charAnimator = GetComponentInChildren<Animator>();
         recenser = recenserObject.GetComponent<MinionRecenser>();
+        audioEmitter = this.GetComponent<AudioSource>();
         recenser.AddMe();
     }
 
@@ -43,7 +47,11 @@ public class Minion : Targetable {
     
     public override void OnDeath()
     {
+        int i = this.deathClips.Length;
         DestroyAfter timeBomb = this.gameObject.AddComponent<DestroyAfter>() as DestroyAfter;
+
+        i = Random.Range(0, i - 1);
+
         if (charAnimator != null)
             charAnimator.SetTrigger("Death");
         this.GetComponent<HealthSystem>().enabled = false;
@@ -52,6 +60,8 @@ public class Minion : Targetable {
         this.GetComponent<NavMeshAgent>().enabled = false;
         this.GetComponent<BasicAttack>().enabled = false;
         this.gameObject.transform.SetParent(cemetery.gameObject.transform);
+        if (audioEmitter != null && this.deathClips.Length > 0)
+            audioEmitter.PlayOneShot(this.deathClips[i]);
         recenser.RemoveMe();
         this.enabled = false;
         timeBomb.delay = delayToDestroy;

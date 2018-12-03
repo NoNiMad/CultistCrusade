@@ -120,7 +120,6 @@ public class MinionSpawner : MonoBehaviour {
 
         inUnitCircle.z = inUnitCircle.y;
         inUnitCircle.y = 0;
-        Debug.Log((inUnitCircle * GetCircleSize()) + "returned");
         return inUnitCircle * GetCircleSize();
     }
 

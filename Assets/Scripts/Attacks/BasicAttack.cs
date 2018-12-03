@@ -18,6 +18,8 @@ public class BasicAttack : Attack {
         {
             if (hs.Damage(damage))
             {
+                if (favourManager != null)
+                    favourManager.AddFavours(favoursOnKill);
                 tracker.RemoveTarget(hs.GetComponent<Targetable>());
             }
         }

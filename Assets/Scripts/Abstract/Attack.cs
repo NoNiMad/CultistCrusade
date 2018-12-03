@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class Attack : MonoBehaviour {
     public float reloadTime = 1;
+    public int favoursOnKill = 0;
+    public FavourManager favourManager;
     private Animator charAnimator;
 
     protected TargetTracker tracker;
