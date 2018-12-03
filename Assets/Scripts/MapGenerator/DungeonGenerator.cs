@@ -25,7 +25,6 @@ public class DungeonGenerator : MonoBehaviour
     private Random rand;
     private List<Room> rooms;
 
-    private Mesh mesh;
     private Dictionary<Graph<Vector2>.Node, Graph<Vector2>.Node> tree;
     private Graph<Vector2> finalGraph;
     private Graph<Vector2> graph;
@@ -34,7 +33,7 @@ public class DungeonGenerator : MonoBehaviour
 
     void Start()
     {
-        Stopwatch watch = new Stopwatch();
+        var watch = new Stopwatch();
 
         watch.Start();
 
@@ -42,9 +41,6 @@ public class DungeonGenerator : MonoBehaviour
 
         Color backgroundColor;
         ColorUtility.TryParseHtmlString("#2F4F4F", out backgroundColor);
-
-        Color roomColor;
-        ColorUtility.TryParseHtmlString("#DEB887", out roomColor);
 
         var backgroundDummyRoom = GameObject.CreatePrimitive(PrimitiveType.Quad);
         backgroundDummyRoom.transform.position = new Vector3(0, 0, 1);
@@ -55,11 +51,11 @@ public class DungeonGenerator : MonoBehaviour
         var relevantRooms = new List<Room>();
 
         for (var i = 0; i < mainRooms; i++)
-            TryCreateRoom(1.25f, Color.yellow, rooms);
+            TryCreateRoom(1.25f, rooms);
 
         relevantRooms.AddRange(rooms);
         for (var i = 0; i < roomAmount.Random - mainRooms; i++)
-            TryCreateRoom(1, roomColor, rooms);
+            TryCreateRoom(1, rooms);
 
         var query = rooms.Where(room =>
                 (room.Size.x > relevantRoomFactor * roomWidth.Average ||
@@ -80,7 +76,7 @@ public class DungeonGenerator : MonoBehaviour
         Debug.Log("Relevant rooms: " + relevantRooms.Count);
         var options =
             new ConstraintOptions {ConformingDelaunay = true, SegmentSplitting = 1};
-        mesh = (Mesh) polygon.Triangulate(options);
+        var mesh = (Mesh) polygon.Triangulate(options);
 
         graph = new Graph<Vector2>(mesh.Vertices.Select(vertex => vertex.toVec2()).ToList());
 
@@ -160,8 +156,6 @@ public class DungeonGenerator : MonoBehaviour
         rooms.RemoveAll(room => toEvict.Contains(room));
     }
 
-    private List<Vector2> midpoints = new List<Vector2>();
-
     public void CreateCorridors(List<Room> relevantRooms)
     {
         var generatedEdges = new List<Tuple<Room, Room>>();
@@ -180,7 +174,6 @@ public class DungeonGenerator : MonoBehaviour
 
                 var midpoint = roomFrom.GetMidPointBetween(roomTo);
 
-                midpoints.Add(midpoint);
                 var isHorAligned = midpoint.x > roomFrom.GetLeft() && midpoint.x < roomFrom.GetRight() &&
                                    midpoint.x > roomTo.GetLeft() && midpoint.x < roomTo.GetRight();
                 var isVerAligned = midpoint.y > roomFrom.GetTop() && midpoint.y < roomFrom.GetBottom() &&
@@ -189,7 +182,6 @@ public class DungeonGenerator : MonoBehaviour
                 generatedEdges.Add(new Tuple<Room, Room>(roomFrom, roomTo));
                 if (isHorAligned)
                 {
-                    Debug.Log("Corridor VER");
                     if (roomTo.GetTop() < roomFrom.GetTop())
                         GridFiller.FillCorridor(grid, new Vector2(midpoint.x, roomTo.GetBottom()),
                             new Vector2(midpoint.x, roomFrom.GetTop()), 3, Orientation.VERTICAL);
@@ -201,8 +193,6 @@ public class DungeonGenerator : MonoBehaviour
 
                 if (isVerAligned)
                 {
-                    Debug.Log("Corridor HOR");
-
                     if (roomTo.GetLeft() < roomFrom.GetLeft())
                         GridFiller.FillCorridor(grid, new Vector2(roomTo.GetRight(), midpoint.y),
                             new Vector2(roomFrom.GetLeft(), midpoint.y), 3, Orientation.HORIZONTAL);
@@ -248,21 +238,13 @@ public class DungeonGenerator : MonoBehaviour
                     GridFiller.FillCorridor(grid, new Vector2(roomTo.GetMidPoint().x, roomFrom.GetMidPoint().y),
                         new Vector2(roomTo.GetMidPoint().x, roomTo.GetBottom()), 3, Orientation.VERTICAL);
                 }
-
-                Debug.Log("Corridor L");
             }
         }
     }
 
-    private Room GetRoomByPos(Vector2 pos, List<Room> rooms)
-    {
-        return rooms.FindLast(room =>
-            room.GetLeft() <= pos.x && room.GetRight() >= pos.x && room.GetTop() <= pos.y && room.GetBottom() >= pos.y);
-    }
-
     public void OnDrawGizmos()
     {
-        if (mesh == null)
+        if (grid == null)
         {
             // We're probably in the editor
             return;
@@ -317,14 +299,9 @@ public class DungeonGenerator : MonoBehaviour
             var p1 = new Vector3(pair.Value.context.x, pair.Value.context.y, 0);
             Gizmos.DrawLine(p0, p1);
         }
-
-        foreach (var midpoint in midpoints)
-        {
-            Gizmos.DrawCube(new Vector3(midpoint.x, midpoint.y, -1), new Vector3(1, 1, 1));
-        }
     }
 
-    private void TryCreateRoom(float randomModifier, Color roomColor, ICollection<Room> rooms)
+    private void TryCreateRoom(float randomModifier, ICollection<Room> rooms)
     {
         var tryLeft = 100;
 
@@ -336,7 +313,7 @@ public class DungeonGenerator : MonoBehaviour
             if (tryLeft <= 0)
                 return;
 
-            var pos = GetRandomPointInCircle((float) mapWidth / 2);
+            var pos = VecUtils.GetRandomPointInCircle(rand, (float) mapWidth / 2);
             room = new Room((int) pos.x, (int) pos.y,
                 (int) (roomWidth.Random * randomModifier), (int) (roomHeight.Random * randomModifier));
 
@@ -350,41 +327,22 @@ public class DungeonGenerator : MonoBehaviour
     {
     }
 
-    List<Room> GetCollidings(Room room, IEnumerable<Room> colliders)
+    private List<Room> GetCollidings(Room room, IEnumerable<Room> colliders)
     {
         var collidings = new List<Room>();
 
-        foreach (var otherRoom in colliders)
-        {
-            if (room == otherRoom)
-                continue;
-
-            if (!(room.GetLeft() <= otherRoom.GetRight()) || !(room.GetRight() >= otherRoom.GetLeft()) ||
-                !(room.GetTop() <= otherRoom.GetBottom()) || !(room.GetBottom() >= otherRoom.GetTop())) continue;
-            if (!collidings.Contains(room))
-                collidings.Add(room);
-            break;
-        }
+        if (!colliders.Where(otherRoom => room != otherRoom).Any(otherRoom =>
+            room.GetLeft() <= otherRoom.GetRight() && room.GetRight() >= otherRoom.GetLeft() &&
+            room.GetTop() <= otherRoom.GetBottom() && room.GetBottom() >= otherRoom.GetTop())) return collidings;
+        if (!collidings.Contains(room))
+            collidings.Add(room);
 
         return collidings;
     }
 
-    Vector2 GetRandomPointInCircle(float radius)
+    private static Room GetRoomByPos(Vector2 pos, List<Room> rooms)
     {
-        var t = 2 * Math.PI * rand.NextDouble();
-        var u = rand.NextDouble() + rand.NextDouble();
-        double r;
-
-        if (u > 1)
-            r = 2 - u;
-        else
-            r = u;
-        return new Vector2(Roundm((float) (radius * r * Math.Cos(t)), 1),
-            Roundm((float) (radius * r * Math.Sin(t)), 1));
-    }
-
-    float Roundm(float n, float m)
-    {
-        return (float) (Math.Floor((n + m - 1) / m) * m);
+        return rooms.FindLast(room =>
+            room.GetLeft() <= pos.x && room.GetRight() >= pos.x && room.GetTop() <= pos.y && room.GetBottom() >= pos.y);
     }
 }
