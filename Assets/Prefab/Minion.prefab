@@ -1369,7 +1369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f851b6aa93a5bc46b4c41eaec72878c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 100
+  maxHealth: 20
   health: 0
 --- !u!114 &114263833601099836
 MonoBehaviour:
@@ -1383,6 +1383,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   recenserObject: {fileID: 0}
+  delayToDestroy: 10
 --- !u!114 &114491225904374728
 MonoBehaviour:
   m_ObjectHideFlags: 1

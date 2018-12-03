@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class Minion : Targetable {
     public GameObject recenserObject;
-    
+    public float delayToDestroy;
+
     MinionRecenser  recenser;
     Attack mainAttack;
     TargetTracker targetTracker;
@@ -39,8 +40,18 @@ public class Minion : Targetable {
         return EntitySide.FRIENDLY;
     }
     
-    void OnDestroy()
+    public override void OnDeath()
     {
+        DestroyAfter timeBomb = this.gameObject.AddComponent<DestroyAfter>() as DestroyAfter;
+        if (charAnimator != null)
+            charAnimator.SetTrigger("Death");
+        this.GetComponent<HealthSystem>().enabled = false;
+        this.GetComponent<TargetTracker>().enabled = false;
+        this.GetComponent<Collider>().enabled = false;
+        this.GetComponent<NavMeshAgent>().enabled = false;
+        this.GetComponent<BasicAttack>().enabled = false;
         recenser.RemoveMe();
+        this.enabled = false;
+        timeBomb.delay = delayToDestroy;
     }
 }

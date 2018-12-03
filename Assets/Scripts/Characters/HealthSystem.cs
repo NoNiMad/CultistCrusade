@@ -60,7 +60,7 @@ public class HealthSystem : MonoBehaviour {
             if (OnKilled != null)
                 OnKilled(GetComponent<Targetable>());
             Destroy(healthBarParent.gameObject);
-            Destroy(gameObject);
+            gameObject.GetComponent<Targetable>().OnDeath();
             return true;
         }
 

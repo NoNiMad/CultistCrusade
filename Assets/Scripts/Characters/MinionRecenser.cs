@@ -17,8 +17,8 @@ public class MinionRecenser : MonoBehaviour {
 		return howManyAlive;
 	}
 
-	void Update()
+	/*void Update()
 	{
 		Debug.Log(howManyAlive + " minions are alive");
-	}
+	}*/
 }
