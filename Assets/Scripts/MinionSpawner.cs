@@ -11,6 +11,7 @@ public class MinionSpawner : MonoBehaviour {
     public int maxCultists = 50;
     public GameObject recenserObject;
     public GameObject playerCharacter;
+    public GameObject cemetery;
 
     bool inCombat = false;
     bool concentrate = false;
@@ -102,8 +103,9 @@ public class MinionSpawner : MonoBehaviour {
     public void SpawnMinion()
     {
         GameObject newMinion = Instantiate(MinionPrefab, transform);
-
-        newMinion.GetComponent<Minion>().recenserObject = this.gameObject;
+        Minion minion = newMinion.GetComponent<Minion>();
+        minion.recenserObject = this.gameObject;
+        minion.cemetery = this.cemetery;
         newMinion.transform.position = SpawnArea.position + Vector3.up * 0.5f;
         newMinion.GetComponent<NavMeshAgent>().destination = GetRelativeRandomDest() + playerCharacter.transform.position;
     }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class Minion : Targetable {
     public GameObject recenserObject;
     public float delayToDestroy;
+    public GameObject cemetery;
 
     MinionRecenser  recenser;
     Attack mainAttack;
@@ -50,6 +51,7 @@ public class Minion : Targetable {
         this.GetComponent<Collider>().enabled = false;
         this.GetComponent<NavMeshAgent>().enabled = false;
         this.GetComponent<BasicAttack>().enabled = false;
+        this.gameObject.transform.SetParent(cemetery.gameObject.transform);
         recenser.RemoveMe();
         this.enabled = false;
         timeBomb.delay = delayToDestroy;
