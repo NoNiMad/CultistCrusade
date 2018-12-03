@@ -2,7 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BasicAttack : Attack {
+public class BasicAttack : Attack
+{
+    public static float reloadModifier = 0f;
+    
     public int damage;
 
     public override void Execute()
@@ -23,5 +26,10 @@ public class BasicAttack : Attack {
                 tracker.RemoveTarget(hs.GetComponent<Targetable>());
             }
         }
+    }
+
+    public override float GetReloadTime()
+    {
+        return reloadTime - reloadModifier;
     }
 }
