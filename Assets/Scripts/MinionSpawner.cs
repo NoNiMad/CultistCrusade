@@ -12,6 +12,7 @@ public class MinionSpawner : MonoBehaviour {
     public GameObject recenserObject;
     public GameObject playerCharacter;
     public GameObject cemetery;
+    public int bonusLife = 0;
 
     bool inCombat = false;
     bool concentrate = false;
@@ -104,6 +105,12 @@ public class MinionSpawner : MonoBehaviour {
     {
         GameObject newMinion = Instantiate(MinionPrefab, transform);
         Minion minion = newMinion.GetComponent<Minion>();
+        HealthSystem hs = minion.GetComponent<HealthSystem>();
+        if (hs != null)
+        {
+            hs.maxHealth += bonusLife;
+            hs.health = hs.maxHealth;
+        }
         minion.recenserObject = this.gameObject;
         minion.cemetery = this.cemetery;
         newMinion.transform.position = SpawnArea.position + Vector3.up * 0.5f;

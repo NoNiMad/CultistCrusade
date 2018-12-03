@@ -42,7 +42,7 @@ public abstract class Attack : MonoBehaviour {
     public abstract void Execute();
 
     // Cooldown in seconds
-    public float GetReloadTime()
+    public virtual float GetReloadTime()
     {
         return reloadTime;
     }
