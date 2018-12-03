@@ -5,6 +5,8 @@ public class Room
     public Vector2 Pos;
     public Vector2 Size;
     public bool IsMainRoom { get; set; }
+    public bool IsSpawn;
+    public bool IsBoss;
 
     public Room(int x, int y, int width, int height)
     {

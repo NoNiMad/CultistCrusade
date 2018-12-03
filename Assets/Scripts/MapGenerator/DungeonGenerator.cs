@@ -131,11 +131,21 @@ public class DungeonGenerator : MonoBehaviour
         }
 
         CreateCorridors(relevantRooms);
-
         CreateHallwayRooms(rooms, relevantRooms);
+
+        SelectSpawnAndBossRoom(relevantRooms);
 
         watch.Stop();
         Debug.Log("Generated in " + watch.ElapsedMilliseconds + " ms");
+    }
+
+    public void SelectSpawnAndBossRoom(List<Room> rooms)
+    {
+        var spawnRoom = rooms.OrderByDescending(room => room.Pos.magnitude).First();
+        spawnRoom.IsSpawn = true;
+
+        var bossRoom = rooms.OrderByDescending(room => (room.Pos - spawnRoom.Pos).magnitude).First();
+        bossRoom.IsBoss = true;
     }
 
     public void CreateHallwayRooms(List<Room> rooms, List<Room> relevantRooms)
@@ -299,6 +309,16 @@ public class DungeonGenerator : MonoBehaviour
             var p1 = new Vector3(pair.Value.context.x, pair.Value.context.y, 0);
             Gizmos.DrawLine(p0, p1);
         }
+
+        Gizmos.color = Color.magenta;
+
+        var spawnRoomPos = rooms.Find(room => room.IsSpawn).GetMidPoint();
+        Gizmos.DrawCube(new Vector3(spawnRoomPos.x, spawnRoomPos.y, 0), new Vector3(2, 2, 2));
+        
+        Gizmos.color = Color.black;
+
+        var bossRoomPos = rooms.Find(room => room.IsBoss).GetMidPoint();
+        Gizmos.DrawCube(new Vector3(bossRoomPos.x, bossRoomPos.y, 0), new Vector3(2, 2, 2));
     }
 
     private void TryCreateRoom(float randomModifier, ICollection<Room> rooms)
