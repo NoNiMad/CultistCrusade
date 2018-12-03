@@ -23,7 +23,6 @@ public class SeismicAreaAttack : Attack {
         tmp.transform.position = new Vector3(this.transform.position.x, 0, this.transform.position.z);
         tmp.transform.localScale = new Vector3(size, 1, size);
         areaAttack = tmp.GetComponent<AreaAttackResolver>();
-        //Debug.Log(this.favourManager);
         areaAttack.favourManager = this.favourManager;
         areaAttack.delay = this.timeToResolve;
         areaAttack.damages = this.damage;

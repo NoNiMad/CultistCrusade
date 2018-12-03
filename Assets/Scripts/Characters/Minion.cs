@@ -34,7 +34,7 @@ public class Minion : Targetable {
     void Update()
     {
         if (charAnimator != null)
-            charAnimator.SetFloat("Speed", Vector3.Project(navMesh.desiredVelocity, transform.forward).magnitude);
+            charAnimator.SetFloat("Speed", navMesh.velocity.magnitude /  navMesh.speed);
         if (targetTracker.targets.Count > 0)
         {
             if (targetTracker.targets.Count < 8 && basicAttack != null && basicAttack.CanExecute())
