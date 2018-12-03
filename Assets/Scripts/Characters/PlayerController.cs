@@ -8,10 +8,12 @@ public class PlayerController : MonoBehaviour {
 
     Rigidbody rb;
     Animator charAnimator;
+    NavMeshAgent agent;
 
 	void Start () {
         rb = GetComponent<Rigidbody>();
         charAnimator = GetComponentInChildren<Animator>();
+        agent = GetComponent<NavMeshAgent>();
 	}
 	
 	void Update () {
