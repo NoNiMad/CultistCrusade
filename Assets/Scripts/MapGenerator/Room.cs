@@ -1,70 +1,15 @@
-using System;
 using UnityEngine;
-using Random = System.Random;
 
 public class Room
 {
-    public GameObject GameObject { get; private set; }
     public Vector2 Pos;
+    public Vector2 Size;
+    public bool IsMainRoom { get; set; }
 
-    public Vector2 Velocity;
-
-    private DungeonGenerator _generator;
-
-    public Room(GameObject gameObject, DungeonGenerator generator)
+    public Room(int x, int y, int width, int height)
     {
-        GameObject = gameObject;
-        _generator = generator;
-
-        Pos.x = gameObject.transform.position.x - gameObject.transform.localScale.x / 2;
-        Pos.y = gameObject.transform.position.y - gameObject.transform.localScale.y / 2;
-    }
-
-    public void Update()
-    {
-        Move();
-        SnapToGrid();
-    }
-
-    private void Move()
-    {
-        Pos.x += Velocity.x;
-        Pos.y += Velocity.y;
-
-        if (GetRight() >= _generator.mapWidth / 2f)
-            Pos.x = _generator.mapWidth / 2f - (GetRight() - GetLeft());
-        if (GetBottom() >= _generator.mapHeight / 2f)
-            Pos.y = _generator.mapHeight / 2f - (GetBottom() - GetTop());
-        if (GetLeft() <= -_generator.mapWidth / 2f)
-            Pos.x = -_generator.mapWidth / 2f;
-        if (GetTop() <= -_generator.mapHeight / 2f)
-            Pos.y = -_generator.mapHeight / 2f;
-    }
-
-    private const float speed = 1f;
-
-    public void Repulse(Room other, Random rand)
-    {
-        var dx = Pos.x - other.Pos.x;
-        var dy = Pos.y - other.Pos.y;
-
-        var vector3 = other.GameObject.transform.position - GameObject.transform.position;
-        vector3.Normalize();
-
-        Velocity.x += vector3.x * rand.Next(-1, 1);
-        Velocity.y += vector3.y * rand.Next(-1, 1);
-
-        //   Velocity.x += dx * rand.Next(-1, 1);
-        //  Velocity.y += dy * rand.Next(-1, 1);
-    }
-
-    public void SnapToGrid()
-    {
-        Pos.x = (float) Math.Round(Pos.x);
-        Pos.y = (float) Math.Round(Pos.y);
-
-        GameObject.transform.position = new Vector3(Pos.x + GameObject.transform.localScale.x / 2,
-            Pos.y + GameObject.transform.localScale.y / 2, 0);
+        Pos = new Vector2(x, y);
+        Size = new Vector2(width, height);
     }
 
     public float GetLeft()
@@ -74,7 +19,7 @@ public class Room
 
     public float GetRight()
     {
-        return Pos.x + GameObject.transform.localScale.x;
+        return Pos.x + Size.x;
     }
 
     public float GetTop()
@@ -84,6 +29,42 @@ public class Room
 
     public float GetBottom()
     {
-        return Pos.y + GameObject.transform.localScale.y;
+        return Pos.y + Size.y;
+    }
+
+    public float GetWidth()
+    {
+        return Size.x;
+    }
+
+    public float GetHeight()
+    {
+        return Size.y;
+    }
+
+    public Vector2 GetMidPoint()
+    {
+        return Pos + Size / 2;
+    }
+
+    public Vector2 GetMidPointBetween(Room other)
+    {
+        var midpoint = new Vector2();
+
+        if (other.GetLeft() + other.GetWidth() / 2 > GetLeft() + GetWidth() / 2)
+            midpoint.x = GetLeft() + GetWidth() / 2 +
+                         (other.GetLeft() + other.GetWidth() / 2 - (GetLeft() + GetWidth() / 2)) / 2;
+        else
+            midpoint.x = other.GetLeft() + other.GetWidth() / 2 +
+                         (GetLeft() + GetWidth() / 2 - (other.GetLeft() + other.GetWidth() / 2)) / 2;
+
+        if (other.GetTop() + other.GetHeight() / 2 > GetTop() + GetHeight() / 2)
+            midpoint.y = GetTop() + GetHeight() / 2 +
+                         (other.GetTop() + other.GetHeight() / 2 - (GetTop() + GetHeight() / 2)) / 2;
+        else
+            midpoint.y = other.GetTop() + other.GetHeight() / 2 +
+                         (GetTop() + GetHeight() / 2 - (other.GetTop() + other.GetHeight() / 2)) / 2;
+
+        return midpoint;
     }
 }
