@@ -58,9 +58,13 @@ public class HealthSystem : MonoBehaviour {
         health -= amount;
         if (amount > 0 && character.hurtClips.Length > 0 && health > 0)
             audioEmitter.PlayOneShot(character.hurtClips[i]);
+
         if (health > maxHealth)
         {
             health = maxHealth;
+        } else
+        {
+            SpawnTextParticle(amount);
         }
 
         if (OnDamage != null)
@@ -73,12 +77,33 @@ public class HealthSystem : MonoBehaviour {
             Destroy(healthBarParent.gameObject);
             gameObject.GetComponent<Targetable>().OnDeath();
             return true;
+        }        
+
+        healthBarParent.gameObject.SetActive(health < maxHealth);
+        return false;
+    }
+
+    Color minGreen = new Color(0, 1, 0, 0.8f);
+    Color maxGreen = new Color(0, 1, 0);
+    Color minDamage = new Color(1, 1, 0, 0.8f);
+    Color maxDamage = new Color(1, 0, 0);
+
+    void SpawnTextParticle(int amount)
+    {
+        GameObject damageText = Instantiate(damageTextPrefab, inGameUIContainer);
+        damageText.transform.position = Camera.main.WorldToScreenPoint(transform.position) + Random.insideUnitSphere * 20;
+
+        TMPro.TextMeshProUGUI textMesh = damageText.GetComponent<TMPro.TextMeshProUGUI>();
+        textMesh.text = Mathf.Abs(amount).ToString();
+        float percentage = Mathf.Clamp((float)amount / 200f, 0f, 1f);
+        if (amount > 0)
+        {
+            textMesh.color = Color.Lerp(minDamage, maxDamage, percentage);
+        }
+        else if (amount < 0)
+        {
+            textMesh.color = Color.Lerp(minGreen, maxGreen, percentage);
         }
 
-        healthBarParent.gameObject.SetActive(health <= maxHealth);
-        GameObject text = Instantiate(damageTextPrefab, inGameUIContainer);
-        text.transform.position = Camera.main.WorldToScreenPoint(transform.position) + Random.insideUnitSphere * 20;
-        text.GetComponent<TMPro.TextMeshProUGUI>().text = amount.ToString();
-        return false;
     }
 }

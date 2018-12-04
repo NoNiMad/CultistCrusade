@@ -368,7 +368,7 @@ GameObject:
   - component: {fileID: 4653659785655252}
   - component: {fileID: 135603649165685304}
   - component: {fileID: 114770362064864352}
-  m_Layer: 10
+  m_Layer: 13
   m_Name: TriggerArea
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -573,7 +573,7 @@ GameObject:
   - component: {fileID: 114491225904374728}
   - component: {fileID: 82409288529852450}
   - component: {fileID: 54812922179411054}
-  m_Layer: 10
+  m_Layer: 11
   m_Name: Minion
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1481,7 +1481,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f851b6aa93a5bc46b4c41eaec72878c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 1000
+  maxHealth: 100
   health: 0
 --- !u!114 &114263833601099836
 MonoBehaviour:

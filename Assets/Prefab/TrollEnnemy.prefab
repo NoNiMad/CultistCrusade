@@ -1534,7 +1534,7 @@ MonoBehaviour:
   deathClips: []
   delayToDestroy: 60
   cemetery: {fileID: 0}
-  delay: 60
+  delay: 1
 --- !u!114 &114885725931154968
 MonoBehaviour:
   m_ObjectHideFlags: 1
