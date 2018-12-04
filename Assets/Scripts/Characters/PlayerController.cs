@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.AI;
+using UnityEngine.SceneManagement;
 
 public class PlayerController : Targetable {
     public float speed;
@@ -34,6 +35,13 @@ public class PlayerController : Targetable {
         if (charAnimator != null)
             charAnimator.SetFloat("Speed", (dir * speed).magnitude);
         rb.angularVelocity = Vector3.zero;
+    }
+
+    public override void OnDeath()
+    {
+        Debug.Log("YOU DIED");
+        SceneManager.LoadScene("DeathScene");
+        base.OnDeath();
     }
 
     public override EntitySide GetSide() {
