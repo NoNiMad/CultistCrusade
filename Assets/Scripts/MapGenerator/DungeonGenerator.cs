@@ -22,6 +22,12 @@ public class DungeonGenerator : MonoBehaviour
     public int mainRooms = 3;
     public float relevantRoomFactor = 1;
 
+	public GameObject straightWall;
+	public GameObject innerCorner;
+	public GameObject outerCorner;
+	public GameObject ground;
+	public GameObject groundUp;
+
     private Random rand;
     private List<Room> rooms;
 
@@ -137,6 +143,83 @@ public class DungeonGenerator : MonoBehaviour
 
         watch.Stop();
         Debug.Log("Generated in " + watch.ElapsedMilliseconds + " ms");
+        //Do generation
+        Generate();
+    }
+
+
+
+
+
+
+
+    void Generate() {
+        int x = 0;
+        int y = 0;
+
+        while (x < this.mapWidth)
+        {
+            while (y < this.mapHeight)
+            {
+                GameObject tmp = IdentifyTile(x, y);
+                tmp.transform.position = new Vector3(x * 4, tmp.transform.position.y, y * 4);
+                //tmp.transform.SetParent(this.transform);
+                y++;
+            }
+            y = 0;
+            x++;
+        }
+    }
+
+    GameObject IdentifyTile(int x, int y) {
+        GameObject tmp;
+        TileType up = grid.GetTileType(x, y - 1);
+        TileType down = grid.GetTileType(x, y + 1);
+        TileType left = grid.GetTileType(x - 1, y);
+        TileType right = grid.GetTileType(x + 1, y);
+        int i;
+        int emptyCorners = (grid.GetTileType(x - 1, y - 1) == TileType.EMPTY ? 1 : 0) + (grid.GetTileType(x + 1, y - 1) == TileType.EMPTY ? 1 : 0) + (grid.GetTileType(x - 1, y + 1) == TileType.EMPTY ? 1 : 0) + (grid.GetTileType(x + 1, y + 1) == TileType.EMPTY ? 1 : 0);
+
+        i = (up == TileType.EMPTY ? 1 : 0) + (left == TileType.EMPTY ? 1 : 0) + (right == TileType.EMPTY ? 1 : 0) + (down == TileType.EMPTY ? 1 : 0);
+        if (grid.GetTileType(x, y) == TileType.EMPTY)
+        {   tmp = Instantiate(groundUp);
+            return tmp;
+        }
+        if (i == 1)
+        {
+            tmp = Instantiate(straightWall);
+            if (up == TileType.EMPTY)
+                 tmp.transform.localRotation = Quaternion.Euler(-90, 180, 0);
+            else if (left == TileType.EMPTY)
+                 tmp.transform.localRotation = Quaternion.Euler(-90, 270, 0);
+            else if (right == TileType.EMPTY)
+                 tmp.transform.localRotation = Quaternion.Euler(-90, 90, 0);
+            return tmp;
+        }
+        if (i == 2 && !(up != TileType.EMPTY && down != TileType.EMPTY || left != TileType.EMPTY && right != TileType.EMPTY))
+        {
+            tmp = Instantiate(innerCorner);
+            if (grid.GetTileType(x - 1, y - 1) != TileType.EMPTY)
+                 tmp.transform.localRotation = Quaternion.Euler(-90, 90, 0);
+            else if (grid.GetTileType(x - 1, y + 1) != TileType.EMPTY)
+                 tmp.transform.localRotation = Quaternion.Euler(-90, 180, 0);
+            else if (grid.GetTileType(x + 1, y + 1) != TileType.EMPTY)
+                 tmp.transform.localRotation = Quaternion.Euler(-90, 270, 0);
+            return tmp;
+        }
+        if (i == 0 && emptyCorners == 1)
+        {
+            tmp = Instantiate(outerCorner);
+            if (grid.GetTileType(x - 1, y - 1) == TileType.EMPTY)
+                 tmp.transform.localRotation = Quaternion.Euler(-90, 180, 0);
+            else if (grid.GetTileType(x - 1, y + 1) == TileType.EMPTY)
+                 tmp.transform.localRotation = Quaternion.Euler(-90, 270, 0);
+            else if (grid.GetTileType(x + 1, y - 1) == TileType.EMPTY)
+                 tmp.transform.localRotation = Quaternion.Euler(-90, 90, 0);
+            return tmp;
+        }
+        tmp = Instantiate(ground);
+        return tmp;
     }
 
     public void SelectSpawnAndBossRoom(List<Room> rooms)

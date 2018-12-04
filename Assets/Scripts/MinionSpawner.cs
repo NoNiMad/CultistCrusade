@@ -113,7 +113,8 @@ public class MinionSpawner : MonoBehaviour {
         }
         minion.recenserObject = this.gameObject;
         minion.cemetery = this.cemetery;
-        newMinion.transform.position = SpawnArea.position + Vector3.up * 0.5f;
+        if (SpawnArea != null)
+            newMinion.transform.position = SpawnArea.position + Vector3.up * 0.5f;
         newMinion.GetComponent<NavMeshAgent>().destination = GetRelativeRandomDest() + playerCharacter.transform.position;
     }
 
