@@ -1483,7 +1483,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7f851b6aa93a5bc46b4c41eaec72878c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 200
+  maxHealth: 50
   health: 0
 --- !u!114 &114749206861046072
 MonoBehaviour:
@@ -1516,6 +1516,9 @@ MonoBehaviour:
   delayToDestroy: 60
   cemetery: {fileID: 0}
   delay: 60
+  healthPU: {fileID: 1934846215085300, guid: 0898d7ab13adb3145be1ff278e855215, type: 2}
+  AtkSpeedPU: {fileID: 1114082721274392, guid: ccec16f741e76854c8511c169ca539c6, type: 2}
+  spawnPU: {fileID: 1208000492063996, guid: 02c5df7aa06642d4d9f43843d96e690d, type: 2}
 --- !u!114 &114885725931154968
 MonoBehaviour:
   m_ObjectHideFlags: 1

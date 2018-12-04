@@ -16,6 +16,7 @@ public class MinionSpawnPowerUp : PowerUp
 	private void BoostMinionSpawn()
 	{
 		target.howManyPerGroup+= minionSpawn;
-		target.maxCultists+= minionSpawn;
+		if (target.maxCultists <= 60)
+			target.maxCultists+= minionSpawn;
 	}
 }
