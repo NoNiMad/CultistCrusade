@@ -31,7 +31,7 @@ public class Enemy : Targetable {
 	
 	void Update ()
     {
-        if (seismicAttack.CanExecute() && tracker.GetAllTargets().Count > 4)
+        if (seismicAttack != null && seismicAttack.CanExecute() && tracker.GetAllTargets().Count > 4)
         {
             seismicAttack.Execute();
         }
