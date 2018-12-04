@@ -8,6 +8,7 @@ public class MinionSpell : Spell {
 
     public override void Cast()
     {
+        if (!CanCast()) return;
         base.Cast();
         for (int i = 0; i < amount; i++)
         {

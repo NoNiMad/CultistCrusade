@@ -8,6 +8,7 @@ public class HealSpell : Spell {
 
     public override void Cast()
     {
+        if (!CanCast()) return;
         base.Cast();
         Collider[] colliders = Physics.OverlapSphere(transform.position, range, LayerMask.GetMask("Minion"));
         foreach (Collider col in colliders)
