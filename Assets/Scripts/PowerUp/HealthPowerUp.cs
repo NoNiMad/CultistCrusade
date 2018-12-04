@@ -15,7 +15,6 @@ public class HealthPowerUp : PowerUp
 	
 	private void BoostMinionHealth()
 	{
-		MinionSpawner TypedTarget = target.GetComponent<MinionSpawner>();
-		TypedTarget.bonusLife += minionHealth;
+		target.bonusLife += minionHealth;
 	}
 }
