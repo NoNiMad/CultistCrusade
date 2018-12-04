@@ -82,7 +82,7 @@ public class MinionSpawner : MonoBehaviour {
         Vector3 groundHit;
 
         groundHit = onFail;
-        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, LayerMask.GetMask("Default")))
+        if (Physics.Raycast(Camera.main.ScreenPointToRay(Input.mousePosition), out hit, Mathf.Infinity, LayerMask.GetMask("Ground")))
         {
             Targetable target = hit.transform.GetComponent<Targetable>();
             if (target != null)
@@ -92,7 +92,7 @@ public class MinionSpawner : MonoBehaviour {
                     groundHit = target.transform.position;
                 }
             }
-            else if (hit.transform.CompareTag("Navigable"))
+            else
             {
                 groundHit = hit.point;
             }

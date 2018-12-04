@@ -9,8 +9,8 @@ EditorBuildSettings:
     path: Assets/Scenes/OpenScene.unity
     guid: 2f391c41bfe3e9047bfbf07e5e595cb5
   - enabled: 1
-    path: Assets/Scenes/Spells.unity
-    guid: 5b6536b1a18a6ca46ae400ec35043767
+    path: Assets/Scenes/Main.unity
+    guid: b118c0c96eaf6254d8a91e8e4ed05ef5
   - enabled: 1
     path: Assets/Scenes/CloseScene.unity
     guid: eb56bcfb7d2768a489d1707b919ab656
